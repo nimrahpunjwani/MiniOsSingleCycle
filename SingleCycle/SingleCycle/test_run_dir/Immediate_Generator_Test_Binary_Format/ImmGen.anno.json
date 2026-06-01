@@ -1,0 +1,22 @@
+[
+  {
+    "class":"firrtl.stage.FirrtlFileAnnotation",
+    "file":"test_run_dir/Immediate_Generator_Test_Binary_Format/ImmGen.lo.fir"
+  },
+  {
+    "class":"firrtl.transforms.CombinationalPath",
+    "sink":"~ImmGen|ImmGen>io_imm",
+    "sources":[
+      "~ImmGen|ImmGen>io_sel",
+      "~ImmGen|ImmGen>io_inst"
+    ]
+  },
+  {
+    "class":"firrtl.EmitCircuitAnnotation",
+    "emitter":"firrtl.LowFirrtlEmitter"
+  },
+  {
+    "class":"firrtl.transforms.BlackBoxTargetDirAnno",
+    "targetDir":"test_run_dir/Immediate_Generator_Test_Binary_Format"
+  }
+]

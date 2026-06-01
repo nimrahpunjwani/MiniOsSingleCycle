@@ -1,0 +1,50 @@
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.ALU_BranchTest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.ImmGenTest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.RunKernelTest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.TypeDecTest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.ALUTest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.InsMemTest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.ContDecTest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.registertest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mALU_BranchTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- ALU Branch Test[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mImmGenTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mregistertest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTypeDecTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mInsMemTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mContDecTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Control Decoder Test[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Type Decoder Test[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Register File Test[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Immediate Generator Test[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mALUTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- ALU should execute all ALU operations correctly[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- InsMem should load instructions from INS.hex and present them on inst output[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.DataMemTest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.InsDecTest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(SingleCycle.MainTest, org.scalatest.tools.Framework$$anon$1@32d5edaa, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRunKernelTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Run kernel and capture console[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mInsDecTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Instruction Decoder Test[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mDataMemTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Data Memory Test[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mMainTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Wowwie Nimsss your Single Cycle is slayingg[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 31 seconds, 525 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 11[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 11, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 11, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.MainTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.ImmGenTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.ContDecTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.DataMemTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.ALUTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.ALU_BranchTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.InsDecTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.RunKernelTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.InsMemTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.TypeDecTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SingleCycle.registertest[0m

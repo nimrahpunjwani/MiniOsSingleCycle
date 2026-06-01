@@ -1,0 +1,13 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(-DWriteVCD=1, Some(07b07fc0-9624-4c89-9c81-670e90ebcf70), Some(CommandSource(console0)))[0m
+[0m[[0m[31merror[0m] [0m[0mExpected symbol[0m
+[0m[[0m[31merror[0m] [0m[0mNot a valid command: -[0m
+[0m[[0m[31merror[0m] [0m[0mExpected end of input.[0m
+[0m[[0m[31merror[0m] [0m[0mExpected '--'[0m
+[0m[[0m[31merror[0m] [0m[0mExpected 'debug'[0m
+[0m[[0m[31merror[0m] [0m[0mExpected 'info'[0m
+[0m[[0m[31merror[0m] [0m[0mExpected 'warn'[0m
+[0m[[0m[31merror[0m] [0m[0mExpected 'error'[0m
+[0m[[0m[31merror[0m] [0m[0mExpected 'addPluginSbtFile'[0m
+[0m[[0m[31merror[0m] [0m[0m-DWriteVCD=1[0m
+[0m[[0m[31merror[0m] [0m[0m ^[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

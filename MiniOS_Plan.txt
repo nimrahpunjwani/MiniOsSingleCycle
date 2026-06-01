@@ -1,0 +1,56 @@
+Mini-OS Implementation Plan (RV32)
+Date: 2026-05-29
+
+Overview
+- Goal: Minimal CLI-mode mini-OS for your single-cycle RISC‑V CPU (Logisim + Chisel).
+- Target: RV32I (32-bit datapath inferred from Logisim). RAM `addrWidth=24` -> ~64 MiB available.
+- Peripheral: no UART found in the design — we'll add a simple memory-mapped console at 0x10000000.
+
+Step-by-step tasks (ordered)
+1) Confirm ISA & memory map
+   - RV32I assumed. Confirm with your Chisel/Verilog if uncertain.
+2) Install RISC‑V cross toolchain
+   - Use WSL (recommended) or native Windows toolchain.
+   - Example (WSL/Ubuntu):
+     sudo apt update
+     sudo apt install gcc-riscv64-unknown-elf binutils-riscv64-unknown-elf
+   - Or download RiS CV prebuilt toolchain (SiFive / riscv-gnu-toolchain builds).
+3) Create repo skeleton
+   - Files: `start.S`, `linker.ld`, `main.c`, `Makefile`, `load-bin.sh`.
+4) Write linker script
+   - Place `.text` at ROM/boot address (choose 0x00000000 or match your Logisim ROM/PC wiring).
+   - Place `.data`/`.bss` in RAM region (match Logisim RAM base).
+5) Startup (`start.S`) and crt0
+   - Set stack pointer, call `main`, loop on exit.
+6) Implement minimal console MMIO
+   - Add Logisim peripheral to detect writes to 0x10000000 and output written byte to a Probe.
+   - In software, implement `putchar()` that writes to `*(volatile uint32_t*)(0x10000000) = c;`.
+7) Minimal C runtime + `main()`
+   - Implement `main()` that prints "Hello, MiniOS" using `putchar`.
+8) Traps/exceptions & simple syscalls (optional)
+   - Implement a trap handler in `start.S` if you want `ecall`-based syscalls.
+9) Bootloader/loader
+   - Either initialize Logisim RAM with the binary or write a tiny ROM bootloader that copies program to RAM and jumps.
+10) Test on simulators
+   - Use Spike/QEMU for functional testing, then load binary into Logisim RAM and run on your CPU.
+11) Add missing instruction support
+   - If tests fail, implement missing instruction types (I, S, B, U, J) and CSRs (if interrupts used).
+12) Iterate: timer interrupts, simple scheduler, tiny shell
+
+Suggested memory map (minimal)
+- ROM/boot: 0x00000000 (instructions)
+- RAM:  0x80000000 (or 0x00000000 depending on wiring) — match Logisim wiring
+- MMIO console: 0x10000000 (write 32-bit word containing byte to print)
+
+Quick build/test commands (example with riscv32 toolchain)
+- Build:
+  riscv32-unknown-elf-gcc -march=rv32i -mabi=ilp32 -nostdlib -T linker.ld -o kernel.elf start.o main.o
+  riscv32-unknown-elf-objcopy -O binary kernel.elf kernel.bin
+- Run in Spike (if available):
+  spike pk kernel.elf
+
+Next steps (I can do right now)
+- Scaffold the repo with `Makefile`, `linker.ld`, `start.S`, `main.c` (hello world using MMIO console).
+- Create an RTF/Word-friendly version of this plan (so you can open it in Word).
+
+Which do you want now? I can scaffold the repo and create the RTF Word file and the plain text file for you.

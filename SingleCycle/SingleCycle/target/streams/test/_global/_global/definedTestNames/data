@@ -1,0 +1,1 @@
+["SingleCycle.MainTest","SingleCycle.ImmGenTest","SingleCycle.ContDecTest","SingleCycle.DataMemTest","SingleCycle.ALUTest","SingleCycle.ALU_BranchTest","SingleCycle.InsDecTest","SingleCycle.RunKernelTest","SingleCycle.InsMemTest","SingleCycle.TypeDecTest","SingleCycle.registertest"]
