@@ -9,6 +9,8 @@ class Main(programFile: String = "INS.hex") extends Module {
     val dmemOut  = Output(UInt(32.W))
     val consoleValid = Output(Bool())
     val consoleByte  = Output(UInt(8.W))
+    val uartRxLoad   = Input(Bool())
+    val uartRxByte   = Input(UInt(8.W))
   })
 
   // ---------------- PC ----------------
@@ -80,18 +82,30 @@ class Main(programFile: String = "INS.hex") extends Module {
   val jalrTarget   = (rf.io.readData1 + imm.io.imm) & (~1.U(32.W))   // JALR must clear LSB
 
   // ---------------- Data Memory ----------------
-  val dmem = Module(new DataMem)
+  val dmem = Module(new DataMem(programFile))
   dmem.io.address   := aluOut
   dmem.io.writeData := rf.io.readData2
   dmem.io.memWrite  := ctrl.io.MemWrite
   dmem.io.memRead   := ctrl.io.MemRead
+  dmem.io.uartRxLoad := io.uartRxLoad
+  dmem.io.uartRxByte := io.uartRxByte
 
-  io.dmemOut := dmem.io.readData
+  val loadOff = aluOut(1, 0)
+  val loadByte = (dmem.io.readData >> (loadOff << 3))(7, 0)
+  val memReadData = MuxLookup(dec.io.funct3, dmem.io.readData, Seq(
+    "b000".U -> Cat(Fill(24, loadByte(7)), loadByte),                 // LB
+    "b001".U -> Cat(Fill(16, (dmem.io.readData >> (loadOff << 3))(15, 15)), (dmem.io.readData >> (loadOff << 3))(15, 0)), // LH
+    "b010".U -> dmem.io.readData,                                      // LW
+    "b100".U -> Cat(0.U(24.W), loadByte),                              // LBU
+    "b101".U -> Cat(0.U(16.W), (dmem.io.readData >> (loadOff << 3))(15, 0)) // LHU
+  ))
+
+  io.dmemOut := memReadData
   io.consoleValid := dmem.io.consoleValid
   io.consoleByte  := dmem.io.consoleByte
 
   // ---------------- Writeback ----------------
-  rf.io.writeData := MuxCase(Mux(ctrl.io.MemToReg, dmem.io.readData, aluOut), Seq(
+  rf.io.writeData := MuxCase(Mux(ctrl.io.MemToReg, memReadData, aluOut), Seq(
     ctrl.io.Jump -> pcPlus4,
     isAuipc -> aluOut,
     isLui -> imm.io.imm

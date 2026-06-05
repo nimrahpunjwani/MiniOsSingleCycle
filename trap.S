@@ -9,7 +9,8 @@ trap_entry:
     j trap_return
 
 syscall_write:
-    li t1, 0x10000000
+    li t1, 0x10000000    # Logisim MMIO console
+    li t5, 0x10013000    # QEMU SiFive UART base (data reg at offset 0)
     mv t2, a1
     mv t3, a2
     mv a0, zero
@@ -18,6 +19,7 @@ write_loop:
     beqz t3, trap_return
     lbu t4, 0(t2)
     sw t4, 0(t1)
+    sb t4, 0(t5)
     addi t2, t2, 1
     addi t3, t3, -1
     addi a0, a0, 1

@@ -1,0 +1,11 @@
+target/
+test_run_dir/
+*.class
+*.fir
+*.lo.fir
+*.o
+*.zip
+qemu.log
+qemuout.txt
+kernel.bin
+kernel.elf

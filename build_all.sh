@@ -10,7 +10,8 @@ python3 tools/kernel_to_logisim.py kernel.hex > logisim_fragment.txt || true
 
 echo "Running Chisel tests"
 cd SingleCycle/SingleCycle
-sbt -no-colour test || true
+# Use a standard sbt invocation (avoid passing flags that sbt treats as commands)
+sbt test || true
 cd ../../
 
 echo "Packaging release"

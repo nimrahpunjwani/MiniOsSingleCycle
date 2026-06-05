@@ -1,29 +1,45 @@
 #include <stdint.h>
 // minimal strcmp to avoid needing libc headers in freestanding build
-static int strcmp(const char *a, const char *b) {
-    while (*a && *b && *a == *b) { a++; b++; }
-    return (unsigned char)*a - (unsigned char)*b;
+static int streq4(const char *s, char a, char b, char c, char d) {
+    return s[0] == a && s[1] == b && s[2] == c && s[3] == d && s[4] == '\0';
 }
 
-#define SYS_write 1
-#define SYS_exit  2
+static int streq5(const char *s, char a, char b, char c, char d, char e) {
+    return s[0] == a && s[1] == b && s[2] == c && s[3] == d && s[4] == e && s[5] == '\0';
+}
 
-static inline long syscall3(long n, long a0, long a1, long a2) {
-    register long x10 asm("a0") = a0;
-    register long x11 asm("a1") = a1;
-    register long x12 asm("a2") = a2;
-    register long x17 asm("a7") = n;
-    asm volatile("ecall" : "+r"(x10) : "r"(x11), "r"(x12), "r"(x17) : "memory");
-    return x10;
+static int streq3(const char *s, char a, char b, char c) {
+    return s[0] == a && s[1] == b && s[2] == c && s[3] == '\0';
+}
+
+/* Match Chisel DataMem / Logisim MMIO (see README) */
+#define UART_TX 0x10000000u
+#define UART_RX 0x10000004u
+
+static unsigned int uart_read(void) {
+    volatile unsigned int *uart_rx = (volatile unsigned int *)UART_RX;
+    return *uart_rx;
+}
+
+static inline void uart_write_char(unsigned char c) {
+    volatile unsigned int *uart_tx = (volatile unsigned int *)UART_TX;
+    *uart_tx = (unsigned int)c;
 }
 
 static inline long sys_write(long fd, const void *buf, long len) {
-    return syscall3(SYS_write, fd, (long)buf, len);
+    (void)fd;
+    const unsigned char *p = (const unsigned char *)buf;
+    long written = 0;
+    while (written < len) {
+        uart_write_char(p[written]);
+        written++;
+    }
+    return written;
 }
 
 static inline void sys_exit(int code) {
-    syscall3(SYS_exit, code, 0, 0);
-    for (;;) { }
+    (void)code;
+    for (;;) { asm volatile("wfi"); }
 }
 
 // Simple CLI + Space Invaders demo integrated
@@ -59,7 +75,6 @@ void run_game(void) {
     int inv_x = 2;
     int dir = 1;
     int player_x = W/2;
-    volatile unsigned int *mmio_in = (volatile unsigned int *)0x10000004;
 
     for (int frame = 0; frame < 0x3fffffff; frame++) {
         clear_screen(screen);
@@ -89,7 +104,7 @@ void run_game(void) {
             }
         }
 
-        unsigned int in = *mmio_in;
+        unsigned int in = uart_read();
         unsigned char c = in & 0xff;
         if (c == 'a' || c == 'A') {
             if (player_x > 0) player_x--;
@@ -106,7 +121,6 @@ void run_game(void) {
 }
 
 int main(void) {
-    volatile unsigned int *mmio_in = (volatile unsigned int *)0x10000004;
     char line[64];
     int li = 0;
     const char *prompt = "> ";
@@ -116,7 +130,7 @@ int main(void) {
         sys_write(1, prompt, 2);
         li = 0;
         for (;;) {
-            unsigned int in = *mmio_in;
+            unsigned int in = uart_read();
             unsigned char c = in & 0xff;
             if (c != 0) {
                 sys_write(1, (const void *)&c, 1);
@@ -129,20 +143,20 @@ int main(void) {
                 } else if (li < (int)sizeof(line)-1) {
                     line[li++] = c;
                 }
-                for (volatile int d=0; d<20000; d++) asm volatile("nop");
+                for (volatile int d=0; d<50; d++) asm volatile("nop");
             }
         }
 
         if (li == 0) continue;
-        if (strcmp(line, "help") == 0) {
+        if (streq4(line, 'h', 'e', 'l', 'p')) {
             const char *h = "Commands: help, run, clear, exit\n";
             sys_write(1, h, 28);
-        } else if (strcmp(line, "clear") == 0) {
+        } else if (streq5(line, 'c', 'l', 'e', 'a', 'r')) {
             const char *crt = "\n\n\n\n\n\n\n\n\n\n";
             sys_write(1, crt, 40);
-        } else if (strcmp(line, "run") == 0) {
+        } else if (streq3(line, 'r', 'u', 'n')) {
             run_game();
-        } else if (strcmp(line, "exit") == 0) {
+        } else if (streq4(line, 'e', 'x', 'i', 't')) {
             sys_exit(0);
         } else {
             const char *unk = "Unknown command\n";

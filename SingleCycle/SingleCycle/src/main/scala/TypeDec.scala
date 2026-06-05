@@ -41,42 +41,42 @@ class TypeDec extends Module {
 
     is("b0010011".U) {            // I-Type (ADDI)
       io.iType := true.B
-      io.immSel := "b001".U
+      io.immSel := "b000".U       // ImmGen: I
     }
 
     is("b0000011".U) {            // LOAD (I-Type)
       io.iType := true.B
-      io.immSel := "b001".U
+      io.immSel := "b000".U
     }
 
     is("b1100111".U) {            // JALR (I-Type)
       io.iType := true.B
-      io.immSel := "b001".U
+      io.immSel := "b000".U
     }
 
     is("b0100011".U) {            // S-Type
       io.sType := true.B
-      io.immSel := "b010".U
+      io.immSel := "b001".U       // ImmGen: S
     }
 
     is("b1100011".U) {            // B-Type
       io.bType := true.B
-      io.immSel := "b011".U
+      io.immSel := "b010".U       // ImmGen: B
     }
 
     is("b0110111".U) {            // LUI (U-Type)
       io.lui := true.B
-      io.immSel := "b100".U
+      io.immSel := "b011".U       // ImmGen: U
     }
 
     is("b0010111".U) {            // AUIPC (U-Type)
       io.auipc := true.B
-      io.immSel := "b100".U
+      io.immSel := "b011".U
     }
 
     is("b1101111".U) {            // JAL (J-Type)
       io.jType := true.B
-      io.immSel := "b101".U
+      io.immSel := "b100".U       // ImmGen: J
     }
   }
 
