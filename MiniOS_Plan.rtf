@@ -1,0 +1,43 @@
+{\rtf1\ansi\deff0
+{\b\fs28 Mini-OS Implementation Plan (RV32)}\par
+{\fs20 Date: 2026-05-29}\par
+\par
+{\b Overview}\par
+- Goal: Minimal CLI-mode mini-OS for your single-cycle RISC-V CPU (Logisim + Chisel).\par
+- Target: RV32I (32-bit datapath inferred). RAM `addrWidth=24` => ~64 MiB.\par
+- Peripheral: no UART found; plan uses a memory-mapped console at 0x10000000.\par
+\par
+{\b Step-by-step tasks (ordered)}\par
+1) Confirm ISA & memory map.\par
+2) Install RISC-V cross toolchain (WSL recommended).\par
+3) Create repo skeleton: `start.S`, `linker.ld`, `main.c`, `Makefile`.\par
+4) Write linker script matching Logisim RAM/ROM layout.\par
+5) Startup (`start.S`) and CRT0: set SP, call `main`, return loop.\par
+6) Implement memory-mapped console in Logisim and `putchar()` in software.\par
+7) Minimal C runtime + `main()` printing "Hello, MiniOS".\par
+8) Add trap/exception handler and `ecall`-based syscalls (optional).\par
+9) Add loader/bootloader or initialize RAM with binary.\par
+10) Test on Spike/QEMU and then in Logisim/Chisel CPU.\par
+11) Fix or add CPU instruction support as needed.\par
+12) Iterate: timer interrupts, scheduler, small shell.\par
+\par
+{\b Suggested memory map}\par
+- ROM/boot: 0x00000000\par
+- RAM: 0x80000000 (or 0x00000000) — match Logisim wiring.\par
+- MMIO console: 0x10000000 (write 32-bit word to print a byte).\par
+\par
+{\b Quick build/test notes}\par
+- Toolchain (example WSL/Ubuntu):\par
+  sudo apt update\par
+  sudo apt install gcc-riscv64-unknown-elf binutils-riscv64-unknown-elf\par
+- Build (example):\par
+  riscv32-unknown-elf-gcc -march=rv32i -mabi=ilp32 -nostdlib -T linker.ld -o kernel.elf start.o main.o\par
+  riscv32-unknown-elf-objcopy -O binary kernel.elf kernel.bin\par
+- Run on Spike (if available): spike pk kernel.elf\par
+\par
+{\b Next steps I can do for you now}\par
+- Scaffold the repo with `Makefile`, `linker.ld`, `start.S`, `main.c` (hello world using MMIO console).\par
+- Show exact Logisim steps to add the MMIO console at 0x10000000.\par
+\par
+Which would you like me to do next?\par
+}

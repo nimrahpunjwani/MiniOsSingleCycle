@@ -1,0 +1,19 @@
+#0 'r' 0x72 bits SW7..SW0=01110010 (display order) | SW0..SW7=01001110
+SET 01001110    # set switches SW0..SW7 to these values (LSB=SW0)
+STROBE       # press STROBE to latch
+
+#1 'u' 0x75 bits SW7..SW0=01110101 (display order) | SW0..SW7=10101110
+SET 10101110    # set switches SW0..SW7 to these values (LSB=SW0)
+STROBE       # press STROBE to latch
+
+#2 'n' 0x6e bits SW7..SW0=01101110 (display order) | SW0..SW7=01110110
+SET 01110110    # set switches SW0..SW7 to these values (LSB=SW0)
+STROBE       # press STROBE to latch
+
+#3 '\' 0x5c bits SW7..SW0=01011100 (display order) | SW0..SW7=00111010
+SET 00111010    # set switches SW0..SW7 to these values (LSB=SW0)
+STROBE       # press STROBE to latch
+
+#4 'n' 0x6e bits SW7..SW0=01101110 (display order) | SW0..SW7=01110110
+SET 01110110    # set switches SW0..SW7 to these values (LSB=SW0)
+STROBE       # press STROBE to latch
