@@ -1,0 +1,22 @@
+[
+  {
+    "class":"firrtl.stage.FirrtlFileAnnotation",
+    "file":"Main.hi.fir"
+  },
+  {
+    "class":"firrtl.EmitCircuitAnnotation",
+    "emitter":"firrtl.HighFirrtlEmitter"
+  },
+  {
+    "class":"firrtl.transforms.DontTouchAnnotation",
+    "target":"~Main|register>io"
+  },
+  {
+    "class":"firrtl.transforms.DontTouchAnnotation",
+    "target":"~Main|register>regs"
+  },
+  {
+    "class":"firrtl.transforms.BlackBoxTargetDirAnno",
+    "targetDir":"."
+  }
+]
